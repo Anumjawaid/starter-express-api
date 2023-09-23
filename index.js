@@ -1,8 +1,9 @@
 const express = require('express')
-const routes = require('./routes/routesController');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
+var Account = require('./Controller/account')
+var Ledger=require('./Controller/ledger')
+var Trial=require('./Controller/trial')
 
 
 const app = express()
@@ -19,16 +20,31 @@ let a = "mongodb+srv://Anum:anum@cluster0.irgo8li.mongodb.net/"
 
 app.all('/', (req, res) => {
     console.log("Just got a request!")
-    app.use('/', routes.routes())
+
+    app.get("/",(req,res)=>{ return res.status(200).send({message:"ALL DONE AND RUNNING"})})
+
+    // *******************Account app***************************************
+    app.post('/addaccount', Account.Addaccount)
+    app.get('/getaccount', Account.GetAllaccounts)
+
+    // *******************Ledger app***************************************
+
+    app.post("/addledger",Ledger.AddLedger)
+    app.get('/getallledger',Ledger.GetAllLedger)
+
+    // *******************Ledger app***************************************
+
+    app.get('/trialbalance',Trial.TrialBalance)
+    app.use('/', app.app())
+
     mongoose.connect(a, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }).then(() => {
-    
-        
+
+
         console.log('connection successful..');
     }).catch((err) => console.log(err));
-    
-    res.send('Yo!')
+
 })
 app.listen(process.env.PORT || 3000)
