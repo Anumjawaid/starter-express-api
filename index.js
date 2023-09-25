@@ -15,7 +15,7 @@ app.use(express.json());
 mongoose.set("strictQuery", false);
 
 // mongoose.connect(`mongodb+srv://Anum:anum@cluster0.x9rxwjh.mongodb.net/wheather`
-let a = "mongodb+srv://Anum:anum@cluster0.irgo8li.mongodb.net/"
+let a = "mongodb+srv://Anum:anum@cluster0.irgo8li.mongodb.net/ERP-test"
 let b="mongodb://localhost:27017/ERP"
 
 
