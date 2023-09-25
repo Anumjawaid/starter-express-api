@@ -45,6 +45,7 @@ exports.GetSpecificLedger = async (props) => {
     try {
         // console.log(props, "props")
         let addLed = await Ledger.find({ "Type": props.data.type })
+        console.log(addLed, "led")
         let Tr = Transform(addLed)
 
         return Tr
@@ -59,18 +60,24 @@ exports.GetSpecificLedger = async (props) => {
 
 function Transform(arr) {
     let main = []
-    let dv = 0, cv = 0
-    let type=arr[0].Type
-    arr.map((v, i) => {
-        dv += v.Debit
-        cv += v.Credit
-        main.push({ Type: v.Type, Account: v.AccountName, Debit: v.Debit, Credit: v.Credit, Balance: v.Debit - v.Credit })
-    })
-    if (arr.length == main.length) {
-        main.push({ Type: type, Account: "", Debit: dv, Credit: cv, Balance: dv - cv })
-        console.log(main,"main")
-        return main
 
+    if (arr.length == 0) {
+        return main
+    }
+    else {
+        let dv = 0, cv = 0
+        let type = arr[0].Type
+        arr.map((v, i) => {
+            dv += v.Debit
+            cv += v.Credit
+            main.push({ Type: v.Type, Account: v.AccountName, Debit: v.Debit, Credit: v.Credit, Balance: v.Debit - v.Credit })
+        })
+        if (arr.length == main.length) {
+            main.push({ Type: type, Account: "", Debit: dv, Credit: cv, Balance: dv - cv })
+            console.log(main, "main")
+            return main
+
+        }
     }
 
 }

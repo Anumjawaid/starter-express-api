@@ -16,6 +16,29 @@ exports.Addaccount = async (req, res) => {
 
 }
 
+exports.Updateaccount = async (req, res) => {
+    try {
+        let { _id,account,type } = req.body.data
+
+        var addaccount = Account.findByIdAndUpdate(_id,{
+            $set:{
+                AccountName: account,
+                Type: type,
+                updated:Date.now
+            }}
+            ,{
+                new:true
+            }
+        )
+           
+        return res.status(200).send({message:"Added",data: addaccount})
+    }
+    catch (ex) {
+        res.status(500).send({message:"Error from Account",data: ex})
+    }
+
+}
+
 exports.GetAllaccounts = async (req, res) => {
     try {
         let acc=await Account.find()

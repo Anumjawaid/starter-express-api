@@ -9,18 +9,18 @@ exports.TrialBalance = async (req, res) => {
         let reven = await Ledger.GetSpecificLedger({ 'data': { type: "Revenue" } })
         let liabi = await Ledger.GetSpecificLedger({ 'data': { type: "Liability" } })
         let gr = GrandTotal([
-            { Debit: asset[asset.length - 1].Debit, Credit: asset[asset.length - 1].Credit },
-            { Debit: equity[equity.length - 1].Debit, Credit: equity[equity.length - 1].Credit },
-            { Debit: expense[expense.length - 1].Debit, Credit: expense[expense.length - 1].Credit },
-            { Debit: reven[reven.length - 1].Debit, Credit: reven[reven.length - 1].Credit },
-            { Debit: liabi[liabi.length - 1].Debit, Credit: liabi[liabi.length - 1].Credit },
+            asset.length != 0 ? { Debit: asset[asset.length - 1]["Debit"], Credit: asset[asset.length - 1]["Credit"] } : {Debit: 0, Credit:0},
+            equity.length != 0 ? { Debit: equity[equity.length - 1].Debit, Credit: equity[equity.length - 1].Credit } : {Debit: 0, Credit:0},
+            expense.length != 0 ? { Debit: expense[expense.length - 1].Debit, Credit: expense[expense.length - 1].Credit } : {Debit: 0, Credit:0},
+            reven.length != 0 ? { Debit: reven[reven.length - 1].Debit, Credit: reven[reven.length - 1].Credit } : {Debit: 0, Credit:0},
+            liabi.length != 0 ? { Debit: liabi[liabi.length - 1].Debit, Credit: liabi[liabi.length - 1].Credit } : {Debit: 0, Credit:0},
 
         ])
 
 
         res.status(200).send({
             "message": "Trial Balance ",
-            data: [{ "Asset": [...asset] }, { "Equity": [...equity] }, { "Expense": [...expense] }, { "Revenue": [...reven] }, { "Liability": [...liabi] },{"GrandTotal":[gr]}]
+            data: [{ "Asset": [...asset] }, { "Equity": [...equity] }, { "Expense": [...expense] }, { "Revenue": [...reven] }, { "Liability": [...liabi] }, { "GrandTotal": [gr] }]
         })
 
     }
@@ -38,5 +38,5 @@ function GrandTotal(arr) {
         tot_deb += v.Debit
         tot_cred += v.Credit
     })
-    return  { Debit: tot_deb, Credit: tot_cred } 
+    return { Debit: tot_deb, Credit: tot_cred }
 }

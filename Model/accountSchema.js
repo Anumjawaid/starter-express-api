@@ -9,7 +9,9 @@ var accountSchema=new Schema(
         },
         Type:{
             type:String
-        }
+        },
+        updated:{ttype:Date,default:Date.now},
+        created:{ttype:Date,default:Date.now}
     }
 )
 

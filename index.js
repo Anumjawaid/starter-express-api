@@ -16,10 +16,10 @@ mongoose.set("strictQuery", false);
 
 // mongoose.connect(`mongodb+srv://Anum:anum@cluster0.x9rxwjh.mongodb.net/wheather`
 let a = "mongodb+srv://Anum:anum@cluster0.irgo8li.mongodb.net/"
+let b="mongodb://localhost:27017/ERP"
 
 
-app.all('/', (req, res) => {
-    console.log("Just got a request!")
+
 
     app.get("/",(req,res)=>{ return res.status(200).send({message:"ALL DONE AND RUNNING"})})
 
@@ -35,7 +35,6 @@ app.all('/', (req, res) => {
     // *******************Ledger app***************************************
 
     app.get('/trialbalance',Trial.TrialBalance)
-    app.use('/', app.app())
 
     mongoose.connect(a, {
         useNewUrlParser: true,
@@ -46,5 +45,5 @@ app.all('/', (req, res) => {
         console.log('connection successful..');
     }).catch((err) => console.log(err));
 
-})
+
 app.listen(process.env.PORT || 3000)
