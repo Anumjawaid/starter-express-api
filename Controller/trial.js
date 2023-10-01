@@ -46,6 +46,8 @@ exports.IncomeStatment = async (req, res) => {
 
     }
     catch (e) {
+        res.status(400).send({ message: "Unable to Fetch Results", data: e })
+
 
     }
 
@@ -53,10 +55,11 @@ exports.IncomeStatment = async (req, res) => {
 
 exports.BalanceSheet=async(req,res)=>{
     try{
+        console.log("rs")
         let asset = await Ledger.GetSpecificLedger({ 'data': { type: "Asset" } })
         let equity = await Ledger.GetSpecificLedger({ 'data': { type: "Equity" } })
-       
         let liabi = await Ledger.GetSpecificLedger({ 'data': { type: "Liability" } })
+        console.log(asset,equity,liabi,"gdh")
         let gr = GrandTotal([
             asset.length != 0 ? { Debit: asset[asset.length - 1]["Debit"], Credit: asset[asset.length - 1]["Credit"] } : { Debit: 0, Credit: 0 },
             equity.length != 0 ? { Debit: equity[equity.length - 1].Debit, Credit: equity[equity.length - 1].Credit } : { Debit: 0, Credit: 0 },
@@ -64,14 +67,17 @@ exports.BalanceSheet=async(req,res)=>{
 
         ])
 
-
+        console.log(gr,"gr")
         res.status(200).send({
             "message": "Balance Sheet ",
-            data: [{ "Asset": [...asset] }, { "Equity": [...equity] }, { "Expense": [...expense] }, { "Revenue": [...reven] }, { "Liability": [...liabi] }, { "Retained Earnings": [gr] }]
+            data: [{ "Asset": [...asset] }, { "Equity": [...equity] },  { "Liability": [...liabi] }, { "Retained Earnings": [gr] }]
         })
 
     }
     catch(e){
+        console.log(e,"Eeror")
+        res.status(400).send({ message: "Unable to Fetch Results", data: e })
+
 
     }
 }

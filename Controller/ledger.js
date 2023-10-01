@@ -45,7 +45,7 @@ exports.GetSpecificLedger = async (props) => {
     try {
         // console.log(props, "props")
         let addLed = await Ledger.find({ "Type": props.data.type })
-        console.log(addLed, "led")
+        // console.log(addLed, "led")
         let Tr = Transform(addLed)
 
         return Tr
@@ -53,7 +53,7 @@ exports.GetSpecificLedger = async (props) => {
     }
     catch (e) {
         // res.status(400).send({message: "Unable to Fetch Results", data: e})
-        console.log(props, "type in error")
+        // console.log(props, "type in error")
         return { "message": e }
     }
 }
@@ -74,7 +74,7 @@ function Transform(arr) {
         })
         if (arr.length == main.length) {
             main.push({ Type: type, Account: "", Debit: dv, Credit: cv, Balance: dv - cv })
-            console.log(main, "main")
+            // console.log(main, "main")
             return main
 
         }
