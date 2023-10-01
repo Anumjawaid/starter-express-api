@@ -32,9 +32,17 @@ let b="mongodb://localhost:27017/ERP"
     app.post("/addledger",Ledger.AddLedger)
     app.get('/getallledger',Ledger.GetAllLedger)
 
-    // *******************Ledger app***************************************
+    // *******************Trial app***************************************
 
     app.get('/trialbalance',Trial.TrialBalance)
+
+     // *******************Income Stament app***************************************
+
+     app.get('/incomestatement',Trial.IncomeStatment)
+
+     // *******************Balance Sheet app***************************************
+
+     app.get('/balancesheet',Trial.BalanceSheet)
 
     mongoose.connect(a, {
         useNewUrlParser: true,
